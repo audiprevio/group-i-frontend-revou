@@ -8,6 +8,7 @@ import { ISPACaseTracker } from "@/components/ISPACaseTracker";
 import { ISPACostTracker } from "@/components/ISPACostTracker";
 import { DataGrid } from "@/components/DataGrid";
 import SkeletonComponent from "@/components/Skeleton";
+import Navbar from "@/components/Navbar";
 
 const DynamicMap = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
@@ -15,21 +16,22 @@ const DynamicMap = dynamic(() => import("@/components/MapComponent"), {
 
 const page = () => {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-10">
-      <div>
-        <DynamicMap />
+    <div className="h-[100vh]">
+      <div className="h-[9vh]">
+        <Navbar />
       </div>
-      <div>
-        <SkeletonComponent />
-      </div>
-      <Divider />
-      <div>
-        <AQITracker />
-        <ISPACaseTracker />
-        <ISPACostTracker />
+      <div className="flex flex-row">
+        <div className="pr-10 pb-10 mr-0 w-1/2 pl-8 flex flex-col items-start justify-start pt-0 mt-0 h-[90vh] overflow-y-scroll overflow-x-hidden">
+          <SkeletonComponent />
+        </div>
+        <div className="w-1/2 mt-0 pt-0">
+          <DynamicMap />
+        </div>
       </div>
     </div>
   );
 };
+
+//
 
 export default page;

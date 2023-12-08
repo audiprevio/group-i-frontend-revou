@@ -5,20 +5,27 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
 import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.png";
 import "leaflet/dist/leaflet.css";
+import "leaflet.tilelayer.colorfilter";
 
 const MapComponent = () => {
   return (
-    <div className="rounded-xl shadow-tremor-card">
-      <MapContainer style={{ 
-        height: "70vh", 
-        width: "90vw",
-        borderRadius: "1rem",
-        borderWidth: "1.5px",
-        borderColor: "#e5e5e5"
-         }} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}>
+    <div className="">
+      <MapContainer
+        style={{
+          height: "91vh",
+          width: "100%",
+          borderWidth: "1.5px",
+          borderColor: "#e5e5e5",
+        }}
+        center={[51.505, -0.09]}
+        zoom={13}
+        scrollWheelZoom={true}
+      >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+          minZoom={0}
+          maxZoom={20}
         />
         <Marker
           icon={
@@ -34,9 +41,7 @@ const MapComponent = () => {
           }
           position={[51.505, -0.09]}
         >
-            <Popup>
-                Testing
-            </Popup>
+          <Popup>Testing</Popup>
         </Marker>
       </MapContainer>
     </div>
