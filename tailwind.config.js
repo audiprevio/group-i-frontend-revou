@@ -10,13 +10,30 @@ module.exports = {
     current: "currentColor",
     extend: {
       colors: {
+        oksigen: {
+          brand: {
+            blue: "#005DD1",
+            blackX: "#1C2B33",
+            grey: "#4E6271",
+            secondary: "#1C2B33",
+            fadeGrey: "#C7D0DA",
+            bluePremium: "#01469C",
+            red: "#D10000",
+            superadmin: "#091729",
+            softblue: "#FAFCFE",
+            softred: "#FFF7F7",
+          },
+          backgroundColor: {
+            'radial-gradient': "radial-gradient(79.77% 79.09% at 50% 51.46%, rgba(235, 222, 255, 0.10) 0%, rgba(124, 44, 255, 0.10) 0.01%, rgba(255, 255, 255, 0.00) 100%), #FFF",
+          },
+        },
         // light mode
         tremor: {
           brand: {
             faint: "#eff6ff", // blue-50
             muted: "#bfdbfe", // blue-200
             subtle: "#60a5fa", // blue-400
-            DEFAULT: "#1D9BF0", // grokblue
+            DEFAULT: "#005DD1", // grokblue
             emphasis: "#1d4ed8", // blue-700
             inverted: "#ffffff", // white
           },

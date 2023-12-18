@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "../.."
+		},
+		{
+			"path": "../../../clones/group-i-backend"
 		}
 	],
 	"settings": {}

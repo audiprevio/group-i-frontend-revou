@@ -17,25 +17,22 @@ import {
   Subtitle
 } from "@tremor/react";
 import { MapIcon } from "@heroicons/react/solid";
-import { CustomAreaChart } from "@/components/CustomAreaChart";
+import { CustomAreaChart } from "./CustomAreaChart";
 
 export default function SkeletonComponent() {
   return (
     <main className="w-full h-[100vh] flex items-start justify-start flex-col m-0 pt-4">
-      <Text>Area yang dipilih:</Text>
-      <div className="flex flex-row items-center justify-between">
-        <div className="flex flex-row items-center w-full">
-          <Title className="!text-2xl text-[#0F141A] mr-[20rem] items-center flex">
-            <Icon size="xl" icon={MapIcon} />
+        <div className="flex flex-col w-full">
+        <Text>Area yang dipilih:</Text>
+          <Title className="text-[#0F141A]">
             Jakarta
           </Title>
-        </div>
-        <div>
-        <Subtitle className="!text-2xl text-[#0F141A] items-center flex">
+          <br />
+          <Text>Tanggal yang dipilih:</Text>
+          <Title className="text-[#0F141A] px-0">
            31/12/23
-          </Subtitle>
+          </Title>
         </div>
-      </div>
       <Divider className="my-2 w-[200%] ml-[-4rem]" />
       <TabGroup className="mt-6">
         <TabList className="items-start flex">

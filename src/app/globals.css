@@ -1,6 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'customs.css';
+
+.noBorderCard {
+  border: none !important;
+}
+
+.border-tremor-brand {
+  --tw-border-opacity: 0 !important;
+  border: none !important;
+}
+
+a.leaflet-popup-close-button {
+  display: none;
+}
 /* 
 :root {
   --foreground-rgb: 0, 0, 0;

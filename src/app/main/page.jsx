@@ -1,35 +1,40 @@
-import Customcard from "@/components/CustomCard";
+"use client";
 import React from "react";
-import dynamic from "next/dynamic";
-import MapComponent from "@/components/MapComponent";
-import { Divider } from "@tremor/react";
-import { AQITracker } from "@/components/AQITracker";
-import { ISPACaseTracker } from "@/components/ISPACaseTracker";
-import { ISPACostTracker } from "@/components/ISPACostTracker";
-import { DataGrid } from "@/components/DataGrid";
-import SkeletonComponent from "@/components/Skeleton";
+import { UserCircleIcon } from "@heroicons/react/solid";
+import LogoOksigen from "../../app/assets/logo oksigen.svg";
+import Avatar from "../../app/assets/avatar.png";
+import ProfileCard from "../../components/ProfileCard";
+import { Text, Title, Card } from "@tremor/react";
+import Image from "next/image";
 
-const DynamicMap = dynamic(() => import("@/components/MapComponent"), {
-  ssr: false,
-});
-
-const page = () => {
+const Navbar = () => {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-10">
-      <div>
-        <DynamicMap />
+    <div className="py-4 px-8 flex flex-row items-center justify-between">
+      <div className="flex flex-row justify-center items-center">
+      <Image src={LogoOksigen} alt="logo oksigen" className="mr-10" />
+      <Text className="px-8 !text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
+        OksigenMap
+      </Text>
+      <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
+        Layanan
+      </Text>
+      <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
+        Dokumentasi
+      </Text>
+      <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
+        API
+      </Text>
+      <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
+        Bantuan
+      </Text>
       </div>
-      <div>
-        <SkeletonComponent />
-      </div>
-      <Divider />
-      <div>
-        <AQITracker />
-        <ISPACaseTracker />
-        <ISPACostTracker />
+      <div className="flex flex-row justify-center items-center">
+        <div className="flex items-end flex-col">
+          <ProfileCard />
+        </div>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Navbar;
