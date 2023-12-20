@@ -15,27 +15,19 @@
 a.leaflet-popup-close-button {
   display: none;
 }
-/* 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+rect {
+  border-radius: 10rem !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.leaflet-popup-content-wrapper {
+  border-radius: 100rem !important;
+  box-shadow: none;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+/* to make sure that the zoom in/out is at the bottom of the screen */
+.leaflet-top {
+  bottom: 0 !important;
+  top: 0;
+  margin-bottom: 1rem;
+} 

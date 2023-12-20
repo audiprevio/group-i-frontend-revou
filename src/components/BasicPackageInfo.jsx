@@ -70,7 +70,7 @@ const LoginForm = () => {
       </div>
       <Button
         className="mb-4 font-semibold text-oksigen-brand-bluePremium mt-20 opacity-100 !rounded-full h-[3rem] antialiased hover:rounded-full transition-all duration-300 hover:text-oksigen-brand-blue !p-4 hover:bg-oksigen-brand-blue !hover:p-4 hover:bg-opacity-5"
-        onClick={() => router.push("/premium-map")}
+        onClick={() => router.push("/register-premium")}
         variant="light"
       >
         Butuh fitur lebih lengkap? Langganan Oksigen Plus sekarang →

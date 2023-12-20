@@ -1,11 +1,11 @@
 "use client";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useAtom } from "jotai";
-import { checkProfileAtom } from "../app/jotai-functions/dynamicatoms";
 import L from "leaflet";
-import { Text } from "@tremor/react";
+import {
+  Text,
+} from "@tremor/react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import BeracunIcon from "../app/assets/Berbahaya.svg";
 import NoDataIcon from "../app/assets/Empty.svg";
@@ -27,17 +27,6 @@ import {
 } from "../app/jotai-functions/dynamicatoms";
 
 const MapComponent = () => {
-  const router = useRouter();
-  const [isPremium] = useAtom(checkProfileAtom);
-
-  useEffect(() => {
-    if (!isPremium) {
-      router.push('/basic-map');
-    } else {
-      router.push('/premium-map');
-    }
-  }, [isPremium]);
-
   const [apiDataResponse] = useAtom(apiDataAtom);
   const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
   const [, setSelectedCityData] = useAtom(selectedCityDataAtom);
@@ -78,27 +67,26 @@ const MapComponent = () => {
       })
     : [];
 
-  const getIcon = (polution) => {
-    if (polution < 1) {
-      return NoDataIcon.src;
-    } else if (polution <= 50) {
-      return BaikIcon.src; // Icon for AQI 0-50
-    } else if (polution <= 100) {
-      return SedangIcon.src; // Icon for AQI 51-100
-    } else if (polution <= 150) {
-      return TidakSehatSensitifIcon.src; // Icon for AQI 101-150
-    } else if (polution <= 200) {
-      return TidakSehatIcon.src; // Icon for AQI 151-200
-    } else if (polution <= 300) {
-      return SangatTidakSehatIcon.src; // Icon for AQI 201-300
-    } else {
-      return BerbahayaIcon.src; // Icon for AQI >300
-    }
-  };
-
+    const getIcon = (polution) => {
+      if (polution < 1) {
+        return NoDataIcon.src;
+      } else if (polution <= 50) {
+        return BaikIcon.src; // Icon for AQI 0-50
+      } else if (polution <= 100) {
+        return SedangIcon.src; // Icon for AQI 51-100
+      } else if (polution <= 150) {
+        return TidakSehatSensitifIcon.src; // Icon for AQI 101-150
+      } else if (polution <= 200) {
+        return TidakSehatIcon.src; // Icon for AQI 151-200
+      } else if (polution <= 300) {
+        return SangatTidakSehatIcon.src; // Icon for AQI 201-300
+      } else {
+        return BerbahayaIcon.src; // Icon for AQI >300
+      }
+    };
 
   return (
-    <div>
+    <div className="">
       <MapContainer
         style={{
           height: "91vh",
@@ -117,7 +105,8 @@ const MapComponent = () => {
                 setSelectedDate(date); // Update the selectedDate atom when the date is changed
                 setSelectedCityData(null); // Reset the selected city data when the date is changed
               }}
-              className="py-2 px-4 font-medium w-[10rem] text-center rounded-full bg-white text-oksigen-brand-blue shadow-md border-[1px] text-lg border-oksigen-brand-fadeGrey"
+              className="py-2 px-4 font-medium w-[10rem] text-center rounded-full bg-oksigen-brand-blue text-white shadow-md border-[1px] text-lg border-oksigen-brand-bluePremium"
+            disabled
             />
           </div>
         </div>
@@ -154,14 +143,16 @@ const MapComponent = () => {
                       cityName: city.name,
                     }));
                     setSelectedCityData(cityDataWithCityName[0]); // Update the selected city data when the marker is clicked
-
+                
+                    // Get the token from local storage
+                    const token = localStorage.getItem('token');
+                
+                    // Fetch data for the selected city for the whole month of December
                     const response = await axios.get(
                       `${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/polution/${cityDataWithCityName[0].cityId}`,
                       {
                         headers: {
-                          Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                          )}`,
+                          'Authorization': `Bearer ${token}`,
                         },
                       }
                     );
@@ -176,7 +167,9 @@ const MapComponent = () => {
                 ) : (
                   cityData.map((item) => (
                     <div key={item.id}>
-                      <Text>{city.name}</Text>
+                      <Text>
+                        {city.name}
+                      </Text>
                     </div>
                   ))
                 )}

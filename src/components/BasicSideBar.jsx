@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import {
   Card,
@@ -12,6 +13,7 @@ import {
   Divider,
   BarChart,
   customTooltip,
+  Button,
 } from "@tremor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,8 +25,11 @@ import {
   selectedCityDataAtom,
   selectedCityDataForDecemberAtom,
 } from "../app/jotai-functions/dynamicatoms";
+import OksigenLogoPremium from "../app/assets/oksigenplus.svg";
+import Image from "next/image";
 
 export default function PremiumSideBar() {
+  const router = useRouter();
   const [selectedCityDataForDecember] = useAtom(
     selectedCityDataForDecemberAtom
   );
@@ -139,7 +144,10 @@ export default function PremiumSideBar() {
       </div>
       <Divider className="w-[200%] ml-[-4rem]" />
       <TabGroup className="pt-4">
-        <TabList variant="solid" className="w-full !rounded-full flex justify-between px-2">
+        <TabList
+          variant="solid"
+          className="w-full !rounded-full flex justify-between px-2"
+        >
           <Tab className=" !text-base m-2 px-4 py-2 !rounded-full !font-medium">
             Rangkuman
           </Tab>
@@ -381,8 +389,8 @@ export default function PremiumSideBar() {
                     icon={faMaskFace}
                     className="text-oksigen-brand-red"
                   />{" "}
-                  Kualitas Udara di {selectedCityData.cityName} pada
-                  Bulan Desember 2023
+                  Kualitas Udara di {selectedCityData.cityName} pada Bulan
+                  Desember 2023
                 </>
               ) : (
                 <>
@@ -393,43 +401,22 @@ export default function PremiumSideBar() {
                   Kualitas Udara
                 </>
               )}
-              <Card
-                className="w-full !rounded-3xl h-[24rem] mt-6 mb-4 overflow-y-scroll"
-                pb-20
-                mb-40
-              >
-                {chartDataAQI.map((data, index, arr) => {
-                  const date = datesInDecember[index];
-                  const aqiValue = Number(data.tooltip.split(": ")[1]);
-
-                  if (aqiValue < 1) {
-                    return null;
-                  }
-
-                  return (
-                    <Card
-                      key={index}
-                      className="w-full h-16 px-4 py-4 m-0 mt-4 !rounded-3xl flex items-center justify-between"
-                    >
-                      <div className="flex flex-row items-center">
-                        <Card
-                          className="w-20 h-10 p-0 m-0 !rounded-xl items-center flex justify-center mr-4"
-                          style={{ backgroundColor: data.color }}
-                        >
-                          <p className="text-white">{aqiValue} {/* AQI Value */}</p>
-                        </Card>
-                        <p className="text-md text-oksigen-brand-secondary">
-                          {getAQIText(aqiValue)} {/* AQI Rank */}
-                        </p>
-                      </div>
-                      {date.toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "long",
-                      })}{" "}
-                      {/* Date */}
-                    </Card>
-                  );
-                })}
+              <Card className="w-full h-[25rem] mt-4 px-20 mb-4 !rounded-3xl from-[#e6e4ff] to-bg-white !bg-gradient-opacity-5 !bg-opacity-10 !items-center !justify-center !flex !flex-col">
+                <Image
+                  src={OksigenLogoPremium}
+                  alt="logo oksigen"
+                  className="shadow-none antialiased w-[10rem] ml-2 mb-[1rem]src/components/RegistForm.jsx"
+                />
+                <Text className="items-center text-center !text-lg !text-oksigen-brand-blackX font-normal mt-4">
+                  Upgrade ke Oksigen+ sekarang untuk mendapatkan detail Kualitas
+                  Udara di Area yang Anda pilih dalam periode 1 bulan
+                </Text>
+                <Button
+                  className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
+                  onClick={() => router.push("/start-premium")}
+                >
+                  Upgrade Sekarang
+                </Button>
               </Card>
             </div>
           </TabPanel>
@@ -499,16 +486,22 @@ export default function PremiumSideBar() {
                 </>
               )}
               <VerticalSpacer size="0.75rem" />
-              <Card className="w-full !rounded-3xl mb-4">
-                <BarChart
-                  className="h-72 mt-4"
-                  data={chartDataRespiratory}
-                  index="date"
-                  categories={["Kasus ISPA"]}
-                  colors={["red"]}
-                  yAxisWidth={30}
-                  customTooltip={customTooltip}
+              <Card className="w-full h-[25rem] mt-4 px-20 mb-4 !rounded-3xl from-[#e6e4ff] to-bg-white !bg-gradient-opacity-5 !bg-opacity-10 !items-center !justify-center !flex !flex-col">
+                <Image
+                  src={OksigenLogoPremium}
+                  alt="logo oksigen"
+                  className="shadow-none antialiased w-[10rem] ml-2 mb-[1rem]src/components/RegistForm.jsx"
                 />
+                <Text className="items-center text-center !text-lg !text-oksigen-brand-blackX font-normal mt-4">
+                  Upgrade ke Oksigen+ sekarang untuk mendapatkan detail Kualitas
+                  Udara di Area yang Anda pilih dalam periode 1 bulan
+                </Text>
+                <Button
+                  className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
+                  onClick={() => router.push("/start-premium")}
+                >
+                  Upgrade Sekarang
+                </Button>
               </Card>
             </div>
           </TabPanel>
@@ -562,31 +555,36 @@ export default function PremiumSideBar() {
               {selectedCityData ? (
                 <>
                   <FontAwesomeIcon
-                    icon={faBriefcaseMedical}
+                    icon={faMoneyBill}
                     className="text-oksigen-brand-red"
                   />{" "}
-                  Biaya Klaim ISPA BPJS di {selectedCityData.cityName} dalam Bulan Desember
+                  Biaya Klaim ISPA BPJS di {selectedCityData.cityName}
                 </>
               ) : (
                 <>
                   <FontAwesomeIcon
-                    icon={faBriefcaseMedical}
+                    icon={faMoneyBill}
                     className="text-oksigen-brand-red"
                   />{" "}
-                  Biaya Klaim ISPA BPJS di Bulan Desember
+                  Biaya Klaim ISPA BPJS
                 </>
               )}
-              <VerticalSpacer size="0.75rem" />
-              <Card className="w-full !rounded-3xl mb-4">
-              <BarChart
-                className="h-72 mt-4"
-                data={chartDataCost}
-                index="date"
-                categories={["Biaya BPJS"]}
-                colors={["red"]}
-                yAxisWidth={30}
-                customTooltip={customTooltip}
-              />
+              <Card className="w-full h-[25rem] mt-4 px-20 mb-4 !rounded-3xl from-[#e6e4ff] to-bg-white !bg-gradient-opacity-5 !bg-opacity-10 !items-center !justify-center !flex !flex-col">
+                <Image
+                  src={OksigenLogoPremium}
+                  alt="logo oksigen"
+                  className="shadow-none antialiased w-[10rem] ml-2 mb-[1rem]src/components/RegistForm.jsx"
+                />
+                <Text className="items-center text-center !text-lg !text-oksigen-brand-blackX font-normal mt-4">
+                  Upgrade ke Oksigen+ sekarang untuk mendapatkan detail Kualitas
+                  Udara di Area yang Anda pilih dalam periode 1 bulan
+                </Text>
+                <Button
+                  className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
+                  onClick={() => router.push("/start-premium")}
+                >
+                  Upgrade Sekarang
+                </Button>
               </Card>
             </div>
           </TabPanel>

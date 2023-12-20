@@ -71,13 +71,6 @@ const PremiumPackageInfo = () => {
           (Coming Soon)
         </Text>
       </div>
-      <Button
-        className="mb-4 font-semibold text-oksigen-brand-grey mt-[3rem] opacity-100 !rounded-full h-[3rem] antialiased hover:rounded-full transition-all duration-300 hover:text-oksigen-brand-blue !p-4 hover:bg-oksigen-brand-blue !hover:p-4 hover:bg-opacity-5"
-        onClick={() => router.push("/register-basic")}
-        variant="light"
-      >
-        Kembali ke Oksigen Basic
-      </Button>
     </div>
   );
 };
