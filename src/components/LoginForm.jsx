@@ -1,6 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import {
   Card,
   Title,
@@ -11,108 +11,121 @@ import {
   Button,
 } from "@tremor/react";
 import { useRouter } from "next/navigation";
+import { useAtom } from 'jotai';
 import OksigenLogoNoText from "../app/assets/oksigennocap.svg";
 import Image from "next/image";
+import { isPremiumAtom } from "../app/jotai-functions/dynamicatoms";
+import jwt from 'jsonwebtoken';
+
+const validationSchema = Yup.object({
+  organization_email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string()
+    .min(5, "Password should be at least 5 characters")
+    .required("Required"),
+});
 
 const LoginForm = () => {
   const router = useRouter();
-  const [organization_email, setOrganizationEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [organizationEmailError, setOrganizationEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const isFormIncomplete = !organization_email || !password;
-  const isFormInvalid = organizationEmailError || passwordError;
+  const [isPremium] = useAtom(isPremiumAtom);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Reset error states
-    setOrganizationEmailError(false);
-    setPasswordError(false);
-
-    // Check for errors
-    if (!organization_email || !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(organization_email)) setOrganizationEmailError(true);
-    if (!password) setPasswordError(true);
-
-    // If any error is detected, stop form submission
-    if (organizationEmailError || passwordError) {
-      return;
-    }
-
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await fetch('http://localhost:3005/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          organization_email: organization_email,
-          password: password,
-          pic_role_institution: 'user', // Automatically assign 'user' role
-        }),
-      });
-
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            organization_email: values.organization_email,
+            password: values.password,
+          }),
+        }
+      );
       const data = await response.json();
-
-      console.log('Response data:', data); // Add this line
-      
+  
       if (!response.ok) {
         throw new Error(data.error);
       }
-
+  
       // Save the token, e.g. in local storage
-      localStorage.setItem('token', data.token);
-
-      // Set the token in the Authorization header for future requests
-      // This is just an example, you might need to adjust this depending on how you handle API requests in your application
-      fetch.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-
-      // Redirect to the map page
-      router.push('/basic-map');
+      localStorage.setItem("token", data.token);
+  
+      // Fetch the user's profile to check if the user is premium
+      const profileResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/profile`,
+        {
+          headers: {
+            'Authorization': `Bearer ${data.token}`,
+          },
+        }
+      );
+      const profileData = await profileResponse.json();
+  
+      // Redirect to the appropriate page based on the user's premium status
+      if (profileData.data.isPremium) {
+        router.push("/premium-map");
+      } else {
+        router.push("/basic-map");
+      }
     } catch (err) {
-      setError(err.message);
+      setErrors({ submit: err.message });
     }
+  
+    setSubmitting(false);
   };
-
 
   return (
     <div className="w-[26rem] py-10 px-12 rounded-2xl shadow-xl border-blue-100 border-[1px] border-opacity-50 shadow-blue-100">
-      <Image
-        src={OksigenLogoNoText}
-        alt="logo oksigen"
-        className="shadow-none antialiased w-[4rem] mb-[1rem]"
-      />
-      <Title className="!text-3xl font-medium pb-2 text-oksigen-brand-blackX">
-        Masuk Oksigen
-      </Title>
-      <form onSubmit={handleSubmit}>
-        <TextInput
-          error={organizationEmailError}
-          errorMessage="Invalid email"
-          placeholder="Email Organisasi"
-          className="mb-4 h-12 !rounded-2xl"
-          value={organization_email}
-          onChange={e => setOrganizationEmail(e.target.value)}
-        />
-        <TextInput
-          error={passwordError}
-          errorMessage="Password is required"
-          placeholder="Password"
-          type="password"
-          className="mb-10 h-12 !rounded-2xl"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        <Button
-          className={`w-full mb-4 opacity-100 h-[3rem] !rounded-full ${isFormIncomplete || isFormInvalid ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500'}`}
-          onClick={() => router.push("/basic-map")}
-          type="submit"
-          disabled={isFormIncomplete || isFormInvalid}
-        >
-          Masuk
-        </Button>
-      </form>
+      <Formik
+        initialValues={{ organization_email: "", password: "" }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting, errors }) => (
+          <Form>
+              <Image
+                src={OksigenLogoNoText}
+                alt="logo oksigen"
+                className="shadow-none antialiased w-[4rem] mb-[1rem]"
+              />
+              <Title className="!text-3xl mb-4 font-medium pb-2 text-oksigen-brand-blackX">
+                Masuk Oksigen
+              </Title>
+              <div>
+                <Field
+                  name="organization_email"
+                  type="email"
+                  placeholder="Email Organisasi"
+                  className="mb-4 h-12 !rounded-2xl w-full border-oksigen-brand-fadeGrey border-[1px] px-2 py-2"
+                />
+                <ErrorMessage name="organization_email" component="div" />
+              </div>
+              <div>
+                <Field
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  className="mb-10 h-12 !rounded-2xl w-full border-oksigen-brand-fadeGrey border-[1px] px-2 py-2"
+                />
+                <ErrorMessage name="password" component="div" />
+              </div>
+              <Button
+                className={`w-full mb-4 opacity-100 h-[3rem] !rounded-full ${
+                  isSubmitting
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "bg-blue-500"
+                }`}
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Masuk
+              </Button>
+              {errors.submit && <div>{errors.submit}</div>}
+          </Form>
+        )}
+      </Formik>
       <Button
         className="w-full mb-10 opacity-100 text-oksigen-brand-secondary rounded-3xl"
         onClick={() => router.push("/password-reset")}
@@ -127,7 +140,7 @@ const LoginForm = () => {
       >
         Belum Punya Akun? Daftar disini
       </Button>
-    </div>
+      </div>
   );
 };
 

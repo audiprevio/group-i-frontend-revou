@@ -20,7 +20,6 @@ import {
 
 const PremiumPackageInfo = () => {
   const router = useRouter();
-
   return (
     <div className="w-[24rem] mt-[3.5rem]">
       <Title className="!text-2xl font-semibold text-oksigen-brand-bluePremium">

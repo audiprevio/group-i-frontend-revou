@@ -18,6 +18,8 @@
     "formik": "^2.4.5",
     "heroicons": "^2.0.18",
     "jotai": "^2.6.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "leaflet-velocity": "^2.1.4",
     "leaflet.tilelayer.colorfilter": "^1.2.5",

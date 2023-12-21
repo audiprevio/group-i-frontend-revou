@@ -1,7 +1,11 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
+import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import PremiumSideBar from "../../components/PremiumSideBar";
 import Navbar from "../../components/Navbar";
+import { checkProfileAtom } from "../jotai-functions/dynamicatoms";
+import { useRouter } from "next/navigation"; 
 
 const DynamicMap = dynamic(
   () => import("../../components/PremiumMapComponent"),
@@ -10,7 +14,9 @@ const DynamicMap = dynamic(
   }
 );
 
+
 const page = () => {
+
   return (
     <div className="h-[100vh]">
       <div className="h-[9vh] z-[9999] fixed w-full">

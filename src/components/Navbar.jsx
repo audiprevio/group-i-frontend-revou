@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import { useAtom } from "jotai";
-import { checkEmailAtom } from "../app/jotai-functions/dynamicatoms";
+import React, { useState, useEffect } from "react";
 import LogoOksigen from "../app/assets/logo oksigen.svg";
 import { Text, Title, Card } from "@tremor/react";
 import Image from "next/image";
@@ -11,7 +9,25 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const router = useRouter();
   const [isCardVisible, setIsCardVisible] = useState(false);
-  const [organizationName] = useAtom(checkEmailAtom); // Get the organization name
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/profile`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        setProfile(response.data.data);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const logout = () => {
     // Clear the JWT token
@@ -47,22 +63,22 @@ const Navbar = () => {
         <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
           Bantuan
         </Text>
+        Hi
       </div>
       <div className="flex flex-row justify-center items-start">
-        <div
-          className="flex items-end flex-col"
-          onClick={toggleCardVisibility}
-          style={{ cursor: "pointer" }}
+      <div
+        className="flex items-end flex-col"
+        onClick={toggleCardVisibility}
+        style={{ cursor: "pointer" }}
+      >
+        <Title
+          className="!text-sm !font-semibold text-oksigen-brand-blackX mr-2
+ hover:bg-oksigen-brand-blue hover:bg-opacity-5 
+ hover:py-2 hover:px-4 px-4 py-2 hover:rounded-tremor-full transition-all duration-300 hover:text-oksigen-brand-blue"
         >
-          <Title
-            className="!text-sm !font-semibold text-oksigen-brand-blackX mr-2
-   hover:bg-oksigen-brand-blue hover:bg-opacity-5 
-   hover:py-2 hover:px-4 px-4 py-2 hover:rounded-tremor-full transition-all duration-300 hover:text-oksigen-brand-blue"
-          >
-            <b className="font-normal">Hi,</b> {organizationName}{" "}
-            {/* Display the organization name */}
-          </Title>
-        </div>
+          <b className="font-normal">Hi,</b> {profile?.organization_name} {profile?.isPremium && '(premium)'}
+        </Title>
+      </div>
         {isCardVisible && (
           <div className="absolute top-full right-8 mt-2 items-">
             <Card className="!rounded-3xl flex items-end justify-end flex-col gap-">

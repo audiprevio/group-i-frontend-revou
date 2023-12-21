@@ -1,14 +1,43 @@
 import { atom } from 'jotai';
 import axios from 'axios';
-
+import jwt from 'jsonwebtoken';
 // Atom to store the selected date
 export const selectedDateAtom = atom(new Date());
 
-// Atom to fetch and store the data from the API
-// Atom to fetch and store the data from the API
+
+export const hasJwtAtom = atom(() => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  return Boolean(token);
+});
+
+export const isJwtExpiredAtom = atom(() => {
+  const token = localStorage.getItem('token');
+  if (!token) return true;
+
+  const decodedToken = jwt.decode(token);
+  const currentTime = Date.now().valueOf() / 1000;
+
+  return decodedToken.exp < currentTime;
+});
+
+export const isPremiumAtom = atom(async (get) => {
+  const hasJwt = get(hasJwtAtom);
+  if (!hasJwt) return false;
+
+  const token = localStorage.getItem('token');
+  const decodedToken = jwt.decode(token);
+  return decodedToken?.isPremium || false;
+});
+
 export const apiDataAtom = atom(
   async (get) => {
-    // Get the token from local storage
+    const hasJwt = get(hasJwtAtom);
+    const isJwtExpired = get(isJwtExpiredAtom);
+    if (!hasJwt || isJwtExpired) {
+      window.location.href = '/login';
+      return;
+    }
+
     const token = localStorage.getItem('token');
 
     // Fetch data for each city ID
@@ -28,7 +57,10 @@ export const apiDataAtom = atom(
 );
 
 export const checkProfileAtom = atom(async (get) => {
-  const token = localStorage.getItem('token');
+  let token;
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('token');
+  }
 
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/profile`, {
@@ -90,3 +122,20 @@ export const checkEmailAtom = atom(async (get) => {
     return null;
   }
 });
+
+export const selectedCityPolutionDataAtom = atom(
+  (get) => get(selectedCityDataAtom),
+  async (get, set) => {
+    const selectedCityData = get(selectedCityDataAtom);
+    if (selectedCityData) {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/polution/city/${selectedCityData.id}`
+        );
+        set(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+);

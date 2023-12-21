@@ -25,11 +25,9 @@ import {
   selectedCityDataForDecemberAtom,
   checkProfileAtom
 } from "../app/jotai-functions/dynamicatoms";
-import { useAuthPremium } from '../app/utils/useAuth'
 
 const MapComponent = () => {
   const router = useRouter();
-  useAuthPremium();
 
   const [apiDataResponse] = useAtom(apiDataAtom);
   const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
@@ -94,7 +92,7 @@ const MapComponent = () => {
     <div>
       <MapContainer
         style={{
-          height: "91vh",
+          height: "92vh",
           width: "100%",
         }}
         center={cities[1].coordinates} // Initial center position
@@ -116,7 +114,7 @@ const MapComponent = () => {
         </div>
         <TileLayer
           attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+          url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
           minZoom={6}
           maxZoom={8}
         />
