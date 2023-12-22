@@ -16,7 +16,6 @@ import {
   Select,
   SelectItem,
   BarChart,
-  customTooltip,
   Button,
 } from "@tremor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -555,7 +554,6 @@ export default function SuperadminSideBar() {
                   categories={["Kasus ISPA"]}
                   colors={["red"]}
                   yAxisWidth={30}
-                  customTooltip={customTooltip}
                 />
               </Card>
             </div>
@@ -642,7 +640,6 @@ export default function SuperadminSideBar() {
                   categories={["Biaya BPJS"]}
                   colors={["red"]}
                   yAxisWidth={30}
-                  customTooltip={customTooltip}
                 />
               </Card>
             </div>

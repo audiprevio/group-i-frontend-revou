@@ -11,7 +11,6 @@ import {
   Title,
   Divider,
   BarChart,
-  customTooltip,
 } from "@tremor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -593,7 +592,6 @@ export default function PremiumSideBar() {
                   categories={["Biaya BPJS"]}
                   colors={["red"]}
                   yAxisWidth={30}
-                  customTooltip={customTooltip}
                 />
               </Card>
             </div>
