@@ -2,11 +2,9 @@
 import React from "react";
 import { useRouter } from 'next/navigation';
 import { Button } from "@tremor/react";
-import { useJWT } from "../app/utils/useAuth";
 
 const ProfileMenu = () => {
   const router = useRouter();
-  useJWT();
 
   return (
     <div className="flex flex-col">
