@@ -17,7 +17,7 @@ import PasswordEditForm from "../../components/PasswordEditForm";
 const page = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="w-full h-full flex flex-row">
         <div className="h-[75vh] w-1/3 to-bg-white border-r-[1px] border-oksigen-brand-fadeGrey mr-20 border-opacity-30">
           <div className="flex items-end justify-end mt-[4rem] mr-8">
