@@ -1,6 +1,5 @@
 import React from "react";
 import SuperadminLoginForm from "../../components/SuperadminLoginForm";
-import Navbar from "../../components/Navbar";
 
 const page = () => {
   return (

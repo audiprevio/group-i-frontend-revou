@@ -70,7 +70,11 @@ const LoginForm = () => {
         router.push("/basic-map");
       }
     } catch (err) {
-      setErrors({ submit: err.message });
+      if (err.response && err.response.status === 404) {
+        setErrors({ submit: 'User not found' });
+      } else {
+        setErrors({ submit: 'Username or Password is Incorrect' });
+      }
     }
   
     setSubmitting(false);
@@ -128,7 +132,7 @@ const LoginForm = () => {
       </Formik>
       <Button
         className="w-full mb-10 opacity-100 text-oksigen-brand-secondary rounded-3xl"
-        onClick={() => router.push("/password-reset")}
+        onClick={() => router.push("/forgot-password")}
         variant="light"
       >
         Lupa Password

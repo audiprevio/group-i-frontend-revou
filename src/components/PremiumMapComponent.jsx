@@ -25,10 +25,11 @@ import {
   selectedCityDataForDecemberAtom,
   checkProfileAtom
 } from "../app/jotai-functions/dynamicatoms";
-import { useAuthPremium } from '../app/utils/useAuth'
+import { useAuthPremium, useJWT } from '../app/utils/useAuth'
 
 const MapComponent = () => {
   const router = useRouter();
+  useJWT();
   useAuthPremium();
 
   const [apiDataResponse] = useAtom(apiDataAtom);

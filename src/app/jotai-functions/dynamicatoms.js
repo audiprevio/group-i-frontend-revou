@@ -11,7 +11,7 @@ export const hasJwtAtom = atom(() => {
 });
 
 export const isJwtExpiredAtom = atom(() => {
-  const token = localStorage.getItem('token');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
   if (!token) return true;
 
   const decodedToken = jwt.decode(token);

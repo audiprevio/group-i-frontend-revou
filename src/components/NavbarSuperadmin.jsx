@@ -63,9 +63,11 @@ const Navbar = () => {
         {isCardVisible && (
           <div className="absolute top-full right-8 mt-2 items-">
             <Card className="!rounded-3xl flex items-end justify-end flex-col gap-">
+              <span onClick={() => router.push("/superadmin-profile-edit")}>
               <Text className="!text-oksigen-brand-blackX !hover:text-oksigen-brand-blue cursor-pointer">
                 Atur Profil
               </Text>
+              </span>
               <div onClick={logout}>
                 <Text className="mt-4 cursor-pointer">Keluar</Text>
               </div>

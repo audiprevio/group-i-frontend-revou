@@ -7,9 +7,10 @@ import {
   Text,
   TextInput,
   Button,
+  Divider,
 } from "@tremor/react";
 
-const PasswordEditForm = () => {
+const PasswordEditNotLoggedIn = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [resetToken, setResetToken] = useState(null);
@@ -56,6 +57,10 @@ const PasswordEditForm = () => {
 
   return (
     <div className="w-[24rem]">
+      <Button variant='light' className='mb-4'   onClick={() => router.push('/login')}>
+        Kembali Ke Log In
+      </Button>
+      <Divider />
       <Title className="!text-3xl font-medium pb-2 text-oksigen-brand-blackX">
         Ubah Password
       </Title>
@@ -101,4 +106,4 @@ const PasswordEditForm = () => {
   );
 };
 
-export default PasswordEditForm;
+export default PasswordEditNotLoggedIn;

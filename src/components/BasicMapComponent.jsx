@@ -25,8 +25,10 @@ import {
   selectedDateChangeAtom,
   selectedCityDataForDecemberAtom,
 } from "../app/jotai-functions/dynamicatoms";
+import { useJWT } from "../app/utils/useAuth";
 
 const MapComponent = () => {
+  useJWT();
   const [apiDataResponse] = useAtom(apiDataAtom);
   const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
   const [, setSelectedCityData] = useAtom(selectedCityDataAtom);
