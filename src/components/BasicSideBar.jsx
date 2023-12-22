@@ -413,7 +413,7 @@ export default function PremiumSideBar() {
                 </Text>
                 <Button
                   className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
-                  onClick={() => router.push("/start-premium")}
+                  onClick={() => router.push("/subscribe-oksigenplus")}
                 >
                   Upgrade Sekarang
                 </Button>
@@ -498,7 +498,7 @@ export default function PremiumSideBar() {
                 </Text>
                 <Button
                   className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
-                  onClick={() => router.push("/start-premium")}
+                  onClick={() => router.push("/subscribe-oksigenplus")}
                 >
                   Upgrade Sekarang
                 </Button>
@@ -581,7 +581,7 @@ export default function PremiumSideBar() {
                 </Text>
                 <Button
                   className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
-                  onClick={() => router.push("/start-premium")}
+                  onClick={() => router.push("/subscribe-oksigenplus")}
                 >
                   Upgrade Sekarang
                 </Button>

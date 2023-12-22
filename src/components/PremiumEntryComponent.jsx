@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import OksigenLogoPremium from "../app/assets/oksigenplus.svg";
 import Image from "next/image";
+import SubscribeButton from "../components/SubscribeButton"
 
 const RegistFormPremium = () => {
   const router = useRouter();
@@ -30,12 +31,7 @@ const RegistFormPremium = () => {
         Saat ini Anda belum berlangganan Oksigen+, klik tombol dibawah ini untuk
         memulai langganan
       </Text>
-      <Button
-        className="w-[50%] mt-4 mb-4 opacity-100 !rounded-full h-[3rem]"
-        onClick={() => router.push("/start-premium")}
-      >
-        Langganan Sekarang
-      </Button>
+      <SubscribeButton />
     </div>
   );
 };

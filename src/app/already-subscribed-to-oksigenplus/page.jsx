@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import PremiumEntryComponent from "../../components/PremiumEntryComponent";
+import PremiumStatusComponent from "../../components/PremiumStatusComponent";
 import PremiumPackageInfo from "../../components/PremiumPackageInfoNoSwitch";
 
 const page = () => {
@@ -10,8 +10,8 @@ const page = () => {
       <div className="w-full h-full flex flex-row">
         <div className="h-91[vh] w-1/2 bg-gradient-to-b from-[#e6e4ff] to-bg-white !bg-gradient-opacity-5 !bg-opacity-10">
           <div className="overflow-y-scroll">
-            <div className="flex items-center justify-center mt-[1rem]">
-              <PremiumEntryComponent />
+            <div className="flex items-center justify-center mt-[5rem]">
+              <PremiumStatusComponent />
             </div>
           </div>
         </div>

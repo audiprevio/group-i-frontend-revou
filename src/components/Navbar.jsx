@@ -1,8 +1,9 @@
 "use client";
 
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import LogoOksigen from "../app/assets/logo oksigen.svg";
-import { Text, Title, Card } from "@tremor/react";
+import { Text, Title, Card, Badge } from "@tremor/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -51,19 +52,9 @@ const Navbar = () => {
         <Text className="px-8 !text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
           OksigenMap
         </Text>
-        <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
-          Layanan
+        <Text className="px-8 !text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
+          Langganan OksigenPlus
         </Text>
-        <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
-          Dokumentasi
-        </Text>
-        <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
-          API
-        </Text>
-        <Text className="px-8 text-sm font-medium text-oksigen-brand-blackX hover:text-oksigen-brand-blue cursor-pointer">
-          Bantuan
-        </Text>
-        Hi
       </div>
       <div className="flex flex-row justify-center items-start">
       <div
@@ -76,7 +67,7 @@ const Navbar = () => {
  hover:bg-oksigen-brand-blue hover:bg-opacity-5 
  hover:py-2 hover:px-4 px-4 py-2 hover:rounded-tremor-full transition-all duration-300 hover:text-oksigen-brand-blue"
         >
-          <b className="font-normal">Hi,</b> {profile?.organization_name} {profile?.isPremium && '(premium)'}
+         {profile?.isPremium && <Badge size="md" className="mr-4 font-normal">OksigenPlus</Badge>} <b className="font-semibold">Halo, {profile?.organization_name}!</b> 
         </Title>
       </div>
         {isCardVisible && (

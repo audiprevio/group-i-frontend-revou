@@ -90,35 +90,6 @@ const RegistFormPremium = () => {
     }
   };
 
-  const checkout = async () => {
-    const data = {
-      id: 1,
-      productName: OksigenPlusSubscribe,
-      price: 69000,
-      quantity: 1
-    } 
-  }
-
-
-  // useEffect(() => {
-  //   const SnapScript = "https://app.sandbox.midtrans.com/snap/snap.js"
-  //   const clientKey = process.env.MIDTRANS_SECRET_KEY
-  //   const script = document.createElement('script')
-  //   script.src = snapScript
-  //   script.setAttribute('data-client-key', clientKey)
-
-  //   document.body.appendChild(script)
-
-  //   return () => {
-  //     document.body.removeChild(script)
-  //   }
-  // }, []);
-
-  // const Checkout = async () => {
-  //   const data = {
-  //     price: product.price
-  //   }
-  // }
 
   return (
     <div className="w-[24rem]">
@@ -182,7 +153,7 @@ const RegistFormPremium = () => {
           className={`w-full mb-4 opacity-100 !rounded-full h-[3rem] ${isFormIncomplete ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500'}`}
           type="submit"
           disabled={isFormIncomplete}
-          onClick={() => router.push("/midtranspayment")}
+          onClick={() => router.push("/subscribe-oksigenplus")}
         >
           Bayar
         </Button>

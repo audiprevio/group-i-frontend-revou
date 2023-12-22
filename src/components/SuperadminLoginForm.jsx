@@ -27,13 +27,13 @@ const SuperadminLoginForm = () => {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/auth/login`,
+        `${process.env.NEXT_PUBLIC_OKSIGEN_API_BASE_URL}/auth/loginadmin`,
         {
           organization_email: values.email,
           password: values.password
         }
       );
-
+  
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         router.push("/admindash");
@@ -42,9 +42,23 @@ const SuperadminLoginForm = () => {
       }
     } catch (error) {
       console.log(error);
-      setErrors({ submit: error.message });
+      let errorMessage = 'An error occurred while logging in';
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        if (error.response.status === 400) {
+          errorMessage = 'Invalid request';
+        } else if (error.response.status === 404) {
+          errorMessage = 'User not found';
+        } else if (error.response.status === 401) {
+          errorMessage = "You're not an Oksigen Admin. Please login as a User!";
+        } else if (error.response.status === 500) {
+          errorMessage = 'Server error';
+        }
+      }
+      setErrors({ submit: errorMessage });
     }
-
+  
     setSubmitting(false);
   };
 
