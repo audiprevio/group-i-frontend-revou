@@ -511,7 +511,6 @@ export default function PremiumSideBar() {
                   categories={["Kasus ISPA"]}
                   colors={["red"]}
                   yAxisWidth={30}
-                  customTooltip={customTooltip}
                 />
               </Card>
             </div>
