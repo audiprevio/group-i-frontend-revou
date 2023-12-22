@@ -12,7 +12,6 @@ import { useJWT } from "../app/utils/useAuth";
 
 const Navbar = () => {
   const router = useRouter();
-  useJWT();
   const [isPremium] = useAtom(isPremiumAtom);
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [profile, setProfile] = useState(null);
